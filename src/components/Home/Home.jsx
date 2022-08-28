@@ -1,21 +1,22 @@
 import { getTrending } from 'helpers/fetchHandler';
 import { useState, useEffect } from 'react';
-import { List, ListItem } from './Home.styled';
+import { List, ListItem,Title } from './Home.styled';
 import { Link } from 'react-router-dom';
 
-export const Home = () => {
+const Home = () => {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
     getTrending().then(setMovies);
   }, []);
   return (
     <div>
+      <Title>Trending Movies of the week</Title>
       <List>
         {movies &&
           movies.map(({ id, poster_path, title }) => {
             return (
-              <Link to={`/movies/${id}`}>
-                <ListItem key={id}>
+              <Link state={{ from: "/" }} to={`/movies/${id}`} key={id}>
+                <ListItem>
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
                     alt="title"
@@ -31,3 +32,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;
